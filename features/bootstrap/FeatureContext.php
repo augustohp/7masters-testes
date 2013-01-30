@@ -7,38 +7,40 @@ use Behat\Behat\Context\ClosuredContextInterface,
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
+use \Exception;
+use Phpsp\Greeting;
 
 /**
  * Features context.
  */
 class FeatureContext extends BehatContext
 {
+    protected $hello;
+    protected $who;
+
     /**
-     * Initializes context.
-     * Every scenario gets it's own context object.
-     *
-     * @param array $parameters context parameters (set them up through behat.yml)
+     * @Given /^a class that does greetings$/
      */
-    public function __construct(array $parameters)
+    public function aClassThatDoesGreetings()
     {
-        // Initialize your context here
+        $this->hello = new Greeting;
     }
 
-//
-// Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
-//    public function iHaveDoneSomethingWith($argument)
-//    {
-//        doSomethingWith($argument);
-//    }
-//
+    /**
+     * @When /^we greet "([^"]*)"$/
+     */
+    public function weGreet($someone)
+    {
+        $this->who = $someone;
+    }
+
+    /**
+     * @Then /^the resulting greeting should be "([^"]*)"$/
+     */
+    public function theResultingGreetingShouldBe($expected)
+    {
+        $result = $this->hello->someone($this->who);
+        if (0 !== strcmp($expected, $result))
+            throw new Exception('Wrong greeting received: '.$result);
+    }
 }
