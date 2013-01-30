@@ -1,0 +1,11 @@
+{
+    "require": {
+        "behat/behat": "@stable",
+        "phpunit/phpunit": "@stable"
+    },
+    "autoload": {
+        "psr-0": {
+            "Phpsp": "src"
+        }
+    }
+}
