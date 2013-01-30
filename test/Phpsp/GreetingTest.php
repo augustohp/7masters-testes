@@ -22,4 +22,14 @@ class GreetingTest extends \PHPUnit_Framework_TestCase
             $greet->someone($someone)
         );
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    function test_greeting_invalid_someone()
+    {
+        $invalid = 'a';
+        $greet = new Greeting;
+        $greet->someone($invalid);
+    }
 }
