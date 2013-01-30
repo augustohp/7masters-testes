@@ -12,24 +12,42 @@ class GreetingTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @depends test_dependencies
+     * @dataProvider provide_valid_people
      */
-    function test_greeting_someone()
+    function test_greeting_someone($someone)
     {
         $greet   = new Greeting;
-        $someone = '7masters';
         $this->assertEquals(
             'Hello '.$someone.'!',
             $greet->someone($someone)
         );
     }
 
+    function provide_valid_people()
+    {
+        return [
+            ['7masters'],
+            ['PHPSP'],
+            ['iMasters']
+        ];
+    }
+
     /**
      * @expectedException InvalidArgumentException
+     * @dataProvider provide_invalid_people
      */
-    function test_greeting_invalid_someone()
+    function test_greeting_invalid_someone($invalid)
     {
-        $invalid = 'a';
         $greet = new Greeting;
         $greet->someone($invalid);
+    }
+
+    function provide_invalid_people()
+    {
+        return [
+            ['a'],
+            [''],
+            ['ab']
+        ];
     }
 }
