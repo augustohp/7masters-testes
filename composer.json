@@ -1,0 +1,6 @@
+{
+    "require": {
+        "behat/behat": "@stable",
+        "phpunit/phpunit": "@stable"
+    }
+}
